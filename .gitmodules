@@ -2,3 +2,23 @@
 	path = push_swap
 	url = https://github.com/ayoubHam2000/push_swap.git
 	branch = master
+[submodule "libft"]
+	path = libft
+	url = https://github.com/ayoubHam2000/libft.git
+	branch = master
+[submodule "get_next_line"]
+	path = get_next_line
+	url = https://github.com/ayoubHam2000/get_next_line.git
+	branch = master
+[submodule "ft_printf"]
+	path = ft_printf
+	url = https://github.com/ayoubHam2000/ft_printf.git
+	branch = master
+[submodule "minitalk"]
+	path = minitalk
+	url = https://github.com/ayoubHam2000/minitalk.git
+	branch = master
+[submodule "fract-ol"]
+	path = fract-ol
+	url = https://github.com/ayoubHam2000/fract-ol.git
+	branch = master

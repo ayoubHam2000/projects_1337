@@ -1,0 +1,70 @@
+variadic arguments
+
+If your project allows you to use yourlibft, you must copy its sources and its
+associated Makefile in a libft folder with its associated Makefile. 
+Your project’s Makefile must compile the library by using its Makefile, then compile the project.
+
+2 days
+
+# test cases
+	int i = 69;
+	int j = 89;
+	int sum = i + j;
+	char c = 'a';
+	char *p = &c;
+	unsigned int r = 3000000000;
+	char *s1 = "Hi! ";
+	char *s2 = "Ayoub";
+
+	ft_printf("-%s-%p-\n", NULL, NULL);
+	ft_printf("");
+	ft_printf("%s", "hghj");
+	ft_printf("%s %d", "hghj", 201);
+	ft_printf("i = %d, j = %d, so i + j = %d in hex = %x = %X || c = %c || address of c is %p ==> %u ==> %s %s ==> %%\n", i, j, sum, sum, sum, c, p, r, s1, s2);
+    ft_printf("%i\n", r);
+    ft_printf("%c", 0);
+    ft_printf("%s", "gjh\xf0jkh");
+    ft_printf("%s", "gjh\x0jkh");
+    ft_printf("%s", "\x0");
+    ft_printf("%d", (int)2147483648U);
+
+
+/*
+//cspdiuxX%
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main(int ac, char **av)
+{
+	ac = 0;
+	av = NULL;
+	
+	int i = 69;
+	int j = 89;
+	int sum = i + j;
+	char c = 'a';
+	char *p = &c;
+	unsigned int r = 3000000000;
+	char *s1 = "Hi! ";
+	char *s2 = "Ayoub";
+	
+	int len1, len2;
+	len1 = 0;
+	len2 = 0;
+	//len1 = printf("i = %d, j = %d, so i + j = %d in hex = %x = %X || c = %c || address of c is %p ==> %u ==> %s %s ==> %%\n", i, j, sum, sum, sum, c, p, r, s1, s2);
+	//len2 = ft_printf("i = %d, j = %d, so i + j = %d in hex = %x = %X || c = %c || address of c is %p ==> %u ==> %s %s ==> %%\n", i, j, sum, sum, sum, c, p, r, s1, s2);
+
+	//len1 = printf("-%s-%p-\n", NULL, NULL);
+	//len2 = ft_printf("-%s-%p-\n", NULL, NULL);
+
+	//len1 = printf("%%\n");
+	//len2 = ft_printf("%%\n");
+
+	len1 = printf("%d", (int)2147483648U);
+	len2 = ft_printf("%d", (int)2147483648U);
+	ft_printf("%d\n", len1);
+	ft_printf("%d\n", len2);
+	return (0);
+}
+*/

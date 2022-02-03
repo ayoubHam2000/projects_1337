@@ -1,0 +1,39 @@
+# read 
+
+ssize_t read(int fildes, void *buf, size_t nbyte);
+
+The read() function shall attempt to read nbyte bytes from the file associated with the open file descriptor, fildes, into the buffer pointed to by buf. 
+
+if nbyte is zero, the read() function may detect and return errors
+
+In the absence of errors, or if error detection is not performed, the read() function shall return zero and have no other results.
+
+If the starting position is at or after the end-of-file, 0 shall be returned
+
+Upon successful completion, read() shall return a non-negative integer indicating the number of bytes actually read. Otherwise, the functions shall return -1 and set errno to indicate the error.
+
+# Open
+#include <fcntl.h>
+
+int open(const char *path, int oflag, ... );
+
+The open() function shall return a file descriptor for the named file that is the lowest file descriptor not currently open for that process..
+
+git clone https://github.com/Tripouille/gnlTester.git
+
+
+#include <stdio.h>
+#include <fcntl.h>
+
+int main()
+{
+	int fd;
+	char *p;
+
+	fd = open("../bin/test1", O_RDONLY);
+	while ((p = get_next_line(fd)))
+	{
+		printf("%s", p);	
+	}
+	return (0);
+}
