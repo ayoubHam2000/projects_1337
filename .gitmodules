@@ -22,3 +22,7 @@
 	path = fract-ol
 	url = https://github.com/ayoubHam2000/fract-ol.git
 	branch = master
+[submodule "_other/linked_list_c"]
+	path = _other/linked_list_c
+	url = https://github.com/ayoubHam2000/linked_list_c.git
+	branch = master
