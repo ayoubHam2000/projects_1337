@@ -1,0 +1,1 @@
+git submodule add -b master [URL to Git repo];
