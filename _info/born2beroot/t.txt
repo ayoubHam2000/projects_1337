@@ -1,0 +1,127 @@
+partitions
+
+30.83G
+boot	500.7MB	5250 2200 3B
+LVMGroup
+root	10G		1073 7418 240B
+swap	2.3G	2469 6061 95B
+home	5G		5368 7091 20B
+var		3G		3221 2254 72B
+srv		3G		3221 2254 72B
+tmp 	3G		3221 2254 72B
+var-log 4G		4294 9672 96B
+
+1.How a virtual machine works.
+
+2.Their choice of operating system
+3.The basic differences between CentOS and Debian
+- large community
+- preferred using terminal rather than application
+- support many archetecture
+- easy to use
+- Debian has more packages
+
+4.The purpose of virtual machines.
+- less money by using one server and normal computer for each employee
+- security
+- test application in many plate form
+- vertuale network
+
+5.the difference between aptitude and apt, and what APPArmor is?
+- apt is a lower level package manager
+- apt restricted only to command line
+- aptitude is a higher-level package manager and has an interactive interface
+- while removing any installed packge, aptitudewill automaticallt remove unused packages.
+- aptitude provides a powerful search not only on the system but also on the entire repository
+- aptitude can give you allpackages that provide a particular service
+- aptitude can give you calarity about dependencies and conflicts.
+
+-----------------------------
+
+1.password chosen for the user
+2.
+su
+apt install sudo
+apt install openssh-server
+apt install ufw
+
+sudo systemctl status ssh
+
+service ssh status
+service ssh restart
+service ssh start
+service ufw start
+
+#check the machine configuaration
+uname -a // uname -v
+
+====================================
+
+sudo groupadd user42
+sudo groupdel user42
+
+#check if a group is created 
+getent group
+
+#create a user and assignit to a group
+sudo adduser new_username
+sudo usermod -aG user42 user_name
+
+#check if the user is in the group
+getent group [group_name]
+
+#check which groups user account belongs
+groups [user_name]
+
+---------------
+adding the user to root and user42 groups
+
+sudo usermod -aG user42 user_name
+sudo usermod -aG root user_name
+sudo visudo
+
+root ALL=(ALL:ALL) ALL
+The first field indicates the username that the rule will apply to
+(root).
+
+First “ALL” indicates that this rule applies to all hosts.
+
+Second “ALL” indicates that the root user can run commands as all
+users.
+
+Third “ALL” indicates that the root user can run commands as all
+groups.
+
+Forth “ALL” indicates these rules apply to all commands.
+
+### password policy
+sudo apt-get -y install libpam-pwquality cracklib-runtime
+
+/etc/login.defs
+PASS_MAX_DAYS	30
+PASS_MIN_DAYS	2
+PASS_WARN_AGE	7
+
+/etc/pam.d/common-password
+3 consecutive identical characters -> maxrepeat=3
+length -> minlen=10
+uppercase -> ucredit=-1
+digits -> dcredit=-1
+retry -> retry=3
+characters that are not part of the former password -> difok=7
+The password must not include the name of the user -> reject_username
+root password has to comply with this policy -> enforce_for_root
+
+sudo reboot
+
+--- password advantage and disadvantage
+
+=================================
+
+hostname
+uname -a // uname -n // hostname
+
+#change the hostname
+hostnamectl set-hostname new_hostname
+/etc/hosts
+sudo reboot
