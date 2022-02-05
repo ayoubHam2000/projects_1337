@@ -45,6 +45,9 @@ apt install sudo
 apt install openssh-server
 apt install ufw
 
+
+sudo ufw enable
+
 sudo systemctl status ssh
 
 service ssh status
@@ -116,6 +119,8 @@ sudo reboot
 
 --- password advantage and disadvantage
 
+chage -l your_new_username
+
 =================================
 
 hostname
@@ -125,3 +130,124 @@ uname -a // uname -n // hostname
 hostnamectl set-hostname new_hostname
 /etc/hosts
 sudo reboot
+
+===================================
+sudo
+
+- The sudo command allows you to run programs with the security privileges of another user (by default, as the superuser).
+- sudoers
+- knowing the root password.
+- It also logs all commands and arguments so there is a record of who used it for what, and when.
+
+sudo vim /etc/sudoers
+
+* Defaults        secure_path
+(the places in the filesystem the operating system will look for applications) that will be used for sudo operations. 
+
+Authentication using sudo has to be limited to 3 attempts in the event of an incorrect password.
+-> Defaults		passwd_tries=3
+
+Each action using sudo has to be archived, both inputs and outputs.
+https://itectec.com/unixlinux/how-to-log-commands-within-a-sudo-su/
+-> Defaults		logfile="/var/log/sudo/sudo.log"
+-> Defaults		log_input,log_output
+
+tty
+https://stackoverflow.com/questions/67985925/why-would-i-want-to-require-a-tty-for-sudo-whats-the-security-benefit-of-requi
+When requiretty is set, sudo must be run from a logged-in terminal session (a tty). 
+This prevents sudo from being used from daemons or other detached processes like cronjobs 
+or webserver plugins. It also means you can't run it directly from an ssh call without 
+setting up a terminal session.
+-> Defaults        requiretty
+
+
+==============================================
+
+ufw
+- is a program for managing a netfilter firewall designed to be easy to use.
+- It uses a command-line interface consisting of a small number of simple commands
+- simplifying the process of configuring a firewall.
+
+- securing your network
+(IP, port, SSH, Subnet, Application Profile like OpenSSH profile )
+.... which will allow all incoming SSH connections on the default SSH port.
+
+sudo ufw allow ssh
+sudo ufw allow 4242
+
+sudo ufw status numbered
+sudo ufw delete (that number, for example 5 or 6)
+
+
+=================================================
+
+
+sudo nano /etc/ssh/sshd_config
+#Port 22 -> Port 4242
+sudo service ssh restart
+
+ssh user_name@0.0.0.0 -p 4242
+
+HOW DO I DISABLE SSH LOGIN FOR THE ROOT USER?
+PermitRootLogin no
+
+SSH, also known as Secure Shell or Secure Socket Shell, 
+is a network protocol that gives users, particularly system administrators, 
+a secure way to access a computer over an unsecured network.
+===============================================
+sudo apt install net-tools
+
+#!/bin/bash
+
+arc=`uname -a`
+pcpu=`cat /proc/cpuinfo | grep "physical id" | sort | uniq | wc -l`
+vcpu=`cat /proc/cpuinfo | grep processor | sort | uniq | wc -l`
+umem=$(free -m | grep "^Mem*" | awk '{printf("%d/%dMB (%.2f%%)\n", $3, $2, $2/$3)}')
+
+fdisk=$(df -Bg | grep '^/dev/' | grep -v '/boot$' | awk '{res += $2} END {print res}')
+udisk=$(df -Bm | grep '^/dev/' | grep -v '/boot$' | awk '{res += $3} END {print res}')
+pdisk=$(df -Bm | grep '^/dev/' | grep -v '/boot$' | awk '{usage += $3} {total+= $2} END {printf("%d"), usage/total*100}')
+dusage=`echo "$udisk/${fdisk}Gb ($pdisk%)"`
+
+cpul=`top -bn1 | grep load | awk '{printf "%.2f%%\n", $(NF-2)}'`
+lb=`who -b | awk '{printf("%s %s\n", $3, $4)}'`
+lvmu=`lsblk |grep "lvm" | wc -l | awk '{if ($1 > 0) {print "yes";exit;} else {print "no"} }'`
+ctcp=`netstat -an | grep ESTABLISHED | wc -l`
+ulog=`who | cut -d " " -f 1 | sort | uniq | wc -l`
+
+ip=`hostname -I`
+mac=`ip a | grep "link/ether" | awk '{print $2}'`
+ip_mac=`echo "$ip" "($mac)"`
+
+cmds_sudo=`cat /var/log/sudo/sudo.log | grep "USER" | wc -l`
+
+wall "	#Architecture: $arc
+	#CPU physical: $pcpu
+	#vCPU: $vcpu
+	#Memory Usage: $umem
+	#Disk Usage: $dusage
+	#CPU load: $cpul
+	#Last boot: $lb
+	#LVM use: $lvmu
+	#Connexions TCP: $ctcp ESTABLISHED
+	#User log: $ulog
+	#Network: IP $ip ($mac)
+	#Sudo: $cmds_sudo cmd
+	"
+
+https://github.com/HEADLIGHTER/Born2BeRoot-42/blob/main/monitoring.sh
+
+sudo crontab -u root -e
+-e : To open crontab with a text editor
+-u : user
+
+*/10 * * * * /usr/local/bin/monitoring.sh
+[Minute] [hour] [Day_of_the_Month] [Month_of_the_Year] [Day_of_the_Week] [command]
+
+* * * * * /scripts/script.sh * * * * * sleep 30; /scripts/script.sh
+every 30s
+
+Time-based job scheduling
+===============================================
+gpasswd --delete user group
+wall #broadcast our system information on all terminals
