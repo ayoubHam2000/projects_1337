@@ -251,3 +251,13 @@ Time-based job scheduling
 ===============================================
 gpasswd --delete user group
 wall #broadcast our system information on all terminals
+
+
+AppArmor
+
+
+/etc/login.defs
+/etc/hosts
+/etc/pam.d/common-password
+/etc/ssh/sshd_config
+sudo crontab -u root -e

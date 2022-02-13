@@ -1,0 +1,13 @@
+https://stackoverflow.com/questions/9537068/sem-close-vs-sem-unlink-when-process-terminates
+
+when a process dies, voluntarily or unvoluntarily, the sem_close operation occurs automatically.
+
+sem_unlink removes the named semaphore, and will destruct the semaphore once its reference count is 0. That is after all process that opened it have called sem_close or have exited.
+
+References: Book - Unix Networking Programming-Interprocess Communication by W.Richard Stevens, vol 2, ch10
+
+
+https://stackoverflow.com/questions/50982730/how-to-get-the-full-returned-value-of-a-child-process
+How to get the full returned value of a child process?
+
+The short answer is that you pretty much can't. Traditionally, the exit status of a process under Unix/Linux is propagated as an 8-bit value. You can return any integer from main that you like, you can call exit with any integer that you like, but only the low-order 8 bits are available to the parent via any of the wait functions.
